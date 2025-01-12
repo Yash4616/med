@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:med/screens/profile_screen.dart';
 import 'package:med/screens/ai_chat_screen.dart';
+import 'package:med/screens/view_profile_screen.dart';
+import 'ai_help_screen.dart';
 
 class DoctorStatScreen extends StatefulWidget {
   const DoctorStatScreen({super.key});
@@ -75,7 +77,7 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
                   ),
                 ),
                 const Text(
-                  'Ramesh',
+                  'Doctor Rahul',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -84,15 +86,13 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
                 const SizedBox(height: 24),
 
                 // Appointment Card
-                _buildAppointmentCard(),
+                _buildPatientCard(),
                 const SizedBox(height: 24), // Adjusted gap here
 
                 // Second Appointment Card
                 _buildSecondAppointmentCard(),
                 const SizedBox(height: 50), // Increased gap here
 
-                // AI Suggestions
-                _buildSuggestionsSection(),
               ],
             ),
           ),
@@ -141,163 +141,25 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
     );
   }
 
-  Widget _buildAppointmentCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: const Column(
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.person, color: Colors.blue),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dr. Rahul',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'General Doctor',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(Icons.chevron_right, color: Colors.white),
-            ],
-          ),
-          SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.calendar_today, color: Colors.white),
-                  SizedBox(width: 8),
-                  Text(
-                    'Sunday, 12 June',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(Icons.access_time, color: Colors.white),
-                  SizedBox(width: 8),
-                  Text(
-                    '11:00 - 12:00 AM',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+  Widget _buildPatientCard() {
+    return PatientCard(
+      patientName: "Ramesh",  // Add patient name
+      patientId: "823y83271",  // Add appropriate patient ID
+      age: 30,  // Add patient age
+      gender: "Male",  // Add patient gender
+      lastCheckup: DateTime(2023, 5, 20),  // Add last checkup date
+      symptoms: ["Fever", "Headache"],  // Add list of symptoms
     );
   }
 
   Widget _buildSecondAppointmentCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.green, // Changed color
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: const Column(
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.person, color: Colors.green), // Changed color
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dr. Priya', // Changed name
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Cardiologist', // Changed specialization
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(Icons.chevron_right, color: Colors.white),
-            ],
-          ),
-          SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.calendar_today, color: Colors.white),
-                  SizedBox(width: 8),
-                  Text(
-                    'Monday, 13 June', // Changed date
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(Icons.access_time, color: Colors.white),
-                  SizedBox(width: 8),
-                  Text(
-                    '2:00 - 3:00 PM', // Changed time
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+    return PatientCard(
+      patientName: "Sara",  // Add patient name
+      patientId: "2873627",  // Add appropriate patient ID
+      age: 25,  // Add patient age
+      gender: "Female",  // Add patient gender
+      lastCheckup: DateTime(2023, 5, 18),  // Add last checkup date
+      symptoms: ["Cough", "Fatigue"],  // Add list of symptoms
     );
   }
 
@@ -324,38 +186,7 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
     );
   }
 
-  Widget _buildSuggestionsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'AI Suggestions',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: _buildSuggestionCard(
-                'Exercise Tip',
-                'Daily exercise boosts mood and energy levels.',
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: _buildSuggestionCard(
-                'Preventive Care',
-                'Regular check-ups help catch health issues early.',
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  
 
   Widget _buildSuggestionCard(String title, String description) {
     return Container(
@@ -391,6 +222,219 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class PatientCard extends StatelessWidget {
+  final String patientName;
+  final String patientId;
+  final int age;
+  final String gender;
+  final DateTime lastCheckup;
+  final List<String> symptoms;
+  final bool isActive;
+
+  const PatientCard({
+    super.key,
+    required this.patientName,
+    required this.patientId,
+    required this.age,
+    required this.gender,
+    required this.lastCheckup,
+    required this.symptoms,
+    this.isActive = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Section
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isActive ? Colors.green : Colors.grey,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        patientName,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'ID: $patientId',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Main Content - Grid Layout
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              childAspectRatio: 3,
+              children: [
+                _buildInfoItem('Age', '$age years'),
+                _buildInfoItem('Gender', gender),
+                _buildInfoItem('Last Checkup', 
+                    '${lastCheckup.day}/${lastCheckup.month}/${lastCheckup.year}'),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,  // Minimize vertical space
+                  children: [
+                    Text(
+                      'Symptoms',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(height: 2),  // Reduced spacing
+                    Container(
+                      constraints: const BoxConstraints(maxHeight: 50),  // Constrain height
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          spacing: 2,  // Reduced spacing
+                          runSpacing: 2,  // Reduced spacing
+                          children: symptoms.map((symptom) => Chip(
+                            visualDensity: VisualDensity.compact,  // More compact chips
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            label: Text(
+                              symptom,
+                              style: const TextStyle(fontSize: 11),  // Smaller text
+                            ),
+                            backgroundColor: Colors.blue[50],
+                            padding: const EdgeInsets.symmetric(horizontal: 4),  // Reduced padding
+                          )).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Footer with AI Button
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {   
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ViewProfileScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.person_outline, size: 18),
+                  label: const Text('View Profile'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    foregroundColor: Colors.black87,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AIHelpScreen(
+                          patientName: patientName,
+                          age: age,
+                          patientId: patientId,
+                          lastVisit: lastCheckup,
+                          physician: 'Dr. Rahul',
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.smart_toy, size: 18),
+                  label: const Text('AI Help'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoItem(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }

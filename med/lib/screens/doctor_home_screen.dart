@@ -307,25 +307,3 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     );
   }
 }
-
-class DoctorStatScreen extends StatefulWidget {
-  const DoctorStatScreen({Key? key}) : super(key: key);
-
-  @override
-  State<DoctorStatScreen> createState() => _DoctorStatScreenState();
-}
-
-class _DoctorStatScreenState extends State<DoctorStatScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Statistics'),
-        elevation: 0,
-      ),
-      body: const Center(
-        child: Text('Statistics Dashboard'),
-      ),
-    );
-  }
-}
