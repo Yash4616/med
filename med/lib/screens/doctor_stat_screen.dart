@@ -148,7 +148,7 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
       age: 30,  // Add patient age
       gender: "Male",  // Add patient gender
       lastCheckup: DateTime(2023, 5, 20),  // Add last checkup date
-      symptoms: ["Fever", "Headache"],  // Add list of symptoms
+      symptoms: const ["Fever", "Headache"],  // Add list of symptoms
     );
   }
 
@@ -159,7 +159,7 @@ class _DoctorStatScreenState extends State<DoctorStatScreen> {
       age: 25,  // Add patient age
       gender: "Female",  // Add patient gender
       lastCheckup: DateTime(2023, 5, 18),  // Add last checkup date
-      symptoms: ["Cough", "Fatigue"],  // Add list of symptoms
+      symptoms: const ["Cough", "Fatigue"],  // Add list of symptoms
     );
   }
 
