@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:med/screens/edit_profile_screen.dart';
 import 'package:med/screens/signup_screen.dart';
 
@@ -139,29 +138,29 @@ class ProfileScreen extends StatelessWidget {
           child: const Text('English'),
         ),
       ),
-      _SettingsItem(
+      const _SettingsItem(
         title: 'Notification',
-        trailing: const Icon(Icons.notifications_outlined),
+        trailing: Icon(Icons.notifications_outlined),
       ),
-      _SettingsItem(
+      const _SettingsItem(
         title: 'Information',
         textColor: Colors.grey,
       ),
-      _SettingsItem(
+      const _SettingsItem(
         title: 'Version',
-        trailing: const Icon(Icons.phone_iphone),
+        trailing: Icon(Icons.phone_iphone),
       ),
-      _SettingsItem(
+      const _SettingsItem(
         title: 'Terms of Service',
-        trailing: const Icon(Icons.description_outlined),
+        trailing: Icon(Icons.description_outlined),
       ),
-      _SettingsItem(
+      const _SettingsItem(
         title: 'Privacy Policy',
-        trailing: const Icon(Icons.security_outlined),
+        trailing: Icon(Icons.security_outlined),
       ),
-      _SettingsItem(
+      const _SettingsItem(
         title: 'Open Source License',
-        trailing: const Icon(Icons.arrow_forward_ios),
+        trailing: Icon(Icons.arrow_forward_ios),
       ),
     ];
   }

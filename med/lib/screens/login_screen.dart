@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import './home_screen.dart';
-import './doctor_home_screen.dart';  // Add this import
+import './patient_home_screen.dart';  // Adjust path based on your project structure
+import './doctor_home_screen.dart';   // Make sure this is also imported
 
 class LoginScreen extends StatefulWidget {
   final String? email;
   final String? password;
-  final String? userType;
+  final String userType;
 
   const LoginScreen({
     Key? key, 
     this.email, 
     this.password,
-    this.userType,
+    required this.userType,
   }) : super(key: key);
 
   @override
@@ -30,23 +30,45 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.text = widget.password ?? '';
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    if (widget.userType == 'doctor') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const DoctorHomeScreen(),
-        ),
+    // Basic validation
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all fields')),
       );
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(userType: 'patient'),
-        ),
+      return;
+    }
+
+    try {
+      // Add your authentication logic here
+      
+      if (widget.userType == 'doctor') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DoctorHomeScreen(
+              email: email,
+              userType: widget.userType,
+            ),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PatientHomeScreen(
+              email: email,
+              userType: widget.userType,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed: ${e.toString()}')),
       );
     }
   }

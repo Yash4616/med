@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:med/screens/profile_screen.dart';
 import 'package:med/screens/ai_chat_screen.dart';
 
-class StatisticsScreen extends StatefulWidget {
-  const StatisticsScreen({super.key});
+class DoctorStatScreen extends StatefulWidget {
+  const DoctorStatScreen({super.key});
 
   @override
-  State<StatisticsScreen> createState() => _StatisticsScreenState();
+  State<DoctorStatScreen> createState() => _DoctorStatScreenState();
 }
 
-class _StatisticsScreenState extends State<StatisticsScreen> {
+class _DoctorStatScreenState extends State<DoctorStatScreen> {
   final int _selectedIndex = 1; // Default to statistics tab
 
   Widget _buildNavItem(String iconPath, bool isActive,

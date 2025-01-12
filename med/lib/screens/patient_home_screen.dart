@@ -4,36 +4,49 @@ import 'dart:io';
 import 'package:med/screens/profile_screen.dart';
 import 'package:med/screens/statistics_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:med/screens/ai_chat_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  final String? userType;
-  const HomeScreen({super.key, required this.userType});
+class PatientHomeScreen extends StatefulWidget {
+  final String userType;
+  final String email;
+
+  const PatientHomeScreen({
+    super.key, 
+    required this.userType,
+    required this.email,
+  });
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _PatientHomeScreenState createState() => _PatientHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PatientHomeScreenState extends State<PatientHomeScreen> with WidgetsBindingObserver {
   final TextEditingController _symptomsController = TextEditingController();
   bool _isContactingDoctor = false;
-  int _selectedIndex = 0;
+  int _selectedIndex = 0;  // Default to home tab
   bool _isSubmitting = false;
   bool _isMicOn = false;
+  bool isMicOn = false;
 
   @override
   void initState() {
     super.initState();
-    if (widget.userType != 'patient') {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pop(context);
-      });
-    }
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _symptomsController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Reset to home tab when returning to screen
+    setState(() {
+      _selectedIndex = 0;
+    });
   }
 
   Future<void> _handleUpload() async {
@@ -196,6 +209,35 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // Add this method in _PatientHomeScreenState
+  void _openAIChat() {
+    showDialog(
+      context: context,
+      builder: (context) => const AIChatDialog(),
+    );
+  }
+
+  // Add this function above the build method
+  void _showRecordingCompleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Voice Message Recorded"),
+          content: const Text("Your voice message has been recorded successfully."),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -289,11 +331,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       IconButton(
                         icon: Icon(
-                          _isMicOn ? Icons.mic : Icons.mic_off,
-                          color: _isMicOn ? Colors.blue : Colors.grey[700],
-                          size: 24,
+                          isMicOn ? Icons.mic : Icons.mic_none,
                         ),
-                        onPressed: _toggleMic,
+                        onPressed: () {
+                          setState(() {
+                            isMicOn = !isMicOn;  // Toggle mic state
+                            
+                            if (!isMicOn) {  // If turning mic OFF
+                              _showRecordingCompleteDialog(context);
+                            }
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -394,7 +442,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
                         _buildNavItem(
                             'assets/icons/ai.png', _selectedIndex == 2,
-                            onTap: () => _onNavItemTapped(2), showBeta: true),
+                            onTap: () {
+                          setState(() => _selectedIndex = 2);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const AIChatScreen()),
+                          );
+                        }, 
+                        showBeta: true),
                         _buildNavItem(
                             'assets/icons/profile.png', _selectedIndex == 4,
                             onTap: () {
@@ -465,7 +520,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildNavItem(String iconPath, bool isActive,
       {VoidCallback? onTap, bool showBeta = false}) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        if (onTap != null) {
+          onTap();
+        }
+        // Reset index when navigating away
+        setState(() => _selectedIndex = 0);
+      },
       child: Container(
         padding: const EdgeInsets.all(10), // Increased padding
         decoration: isActive
@@ -480,12 +541,12 @@ class _HomeScreenState extends State<HomeScreen> {
               iconPath,
               height: 25, // Increased icon size
               width: 28,
-              color: Colors.white,
+              // Removed color: Colors.white to show original icon color
             ),
             if (showBeta)
               Positioned(
-                right: -5,
-                top: -5,
+                right: -3,
+                top: -4,
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
@@ -504,6 +565,37 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AIChatDialog extends StatefulWidget {
+  const AIChatDialog({Key? key}) : super(key: key);
+
+  @override
+  State<AIChatDialog> createState() => _AIChatDialogState();
+}
+
+class _AIChatDialogState extends State<AIChatDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('AI Chat'),
+      content: const SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Add your chat UI components here
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Close'),
+        ),
+      ],
     );
   }
 }

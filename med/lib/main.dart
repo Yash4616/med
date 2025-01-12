@@ -108,7 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     // Your sign up screen implementation
-    return Scaffold(
+    return const Scaffold(
       // ... widget tree
     );
   }
